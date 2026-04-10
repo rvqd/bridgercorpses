@@ -1,278 +1,100 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Exact Roblox Server</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-        :root {
-            --bg: #0b0f0d;
-            --card: rgba(22, 28, 24, 0.88);
-            --card-border: rgba(160, 193, 157, 0.16);
-            --text: #f5f7f5;
-            --muted: #b9c4bb;
-            --accent: #a0c19d;
-            --accent-hover: #8fb38c;
-            --danger: #ffcc66;
-            --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
         body {
-            margin: 0;
-            min-height: 100vh;
             font-family: 'Inter', sans-serif;
-            color: var(--text);
-            background:
-                radial-gradient(circle at top, rgba(160, 193, 157, 0.12), transparent 35%),
-                linear-gradient(180deg, #0b0f0d 0%, #111814 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 32px 18px;
+            background: #0f0f0f;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin: 0;
         }
-
-        .container {
-            width: 100%;
-            max-width: 720px;
-        }
-
-        .card {
-            background: var(--card);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 36px 28px;
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(14px);
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(160, 193, 157, 0.12);
-            color: var(--accent);
-            border: 1px solid rgba(160, 193, 157, 0.2);
-            border-radius: 999px;
-            padding: 8px 14px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 18px;
-        }
-
-        h1 {
-            margin: 0 0 12px;
-            font-size: clamp(2rem, 5vw, 3rem);
-            line-height: 1.05;
-            letter-spacing: -0.03em;
-        }
-
-        .subtitle {
-            margin: 0 auto 28px;
-            font-size: 1.05rem;
-            color: var(--muted);
-            line-height: 1.6;
-            max-width: 560px;
-        }
-
+        h1 { color: #a0c19d; font-size: 2.8em; margin-bottom: 10px; }
         .server-info {
-            display: grid;
-            gap: 14px;
-            margin: 26px 0 28px;
-            text-align: left;
-        }
-
-        .info-row {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: #1f1f1f;
+            padding: 25px;
             border-radius: 16px;
-            padding: 16px 18px;
+            display: inline-block;
+            margin: 25px 0;
+            max-width: 420px;
         }
-
-        .label {
-            display: block;
-            font-size: 0.82rem;
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 8px;
-        }
-
-        .value {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text);
-            word-break: break-word;
-        }
-
-        .actions {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 8px;
-        }
-
         button {
-            appearance: none;
+            background: #a0c19d;
+            color: #111;
+            font-size: 1.5em;
+            font-weight: 600;
+            padding: 20px 50px;
             border: none;
-            border-radius: 16px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: 700;
-            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-        }
-
-        .primary-btn {
-            background: linear-gradient(180deg, var(--accent) 0%, #8fb38c 100%);
-            color: #0d130f;
-            font-size: 1.05rem;
-            padding: 16px 22px;
-            box-shadow: 0 12px 30px rgba(160, 193, 157, 0.2);
-        }
-
-        .primary-btn:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(180deg, #accda9 0%, var(--accent-hover) 100%);
-        }
-
-        .secondary-btn {
-            background: rgba(255, 255, 255, 0.04);
-            color: var(--text);
-            font-size: 0.98rem;
-            padding: 14px 18px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .secondary-btn:hover {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.07);
-        }
-
-        .notice {
-            margin-top: 22px;
-            padding: 14px 16px;
             border-radius: 14px;
-            background: rgba(255, 204, 102, 0.08);
-            border: 1px solid rgba(255, 204, 102, 0.18);
-            color: var(--danger);
-            font-size: 0.95rem;
-            line-height: 1.55;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.2s;
         }
-
-        .footer-text {
-            margin-top: 18px;
-            color: var(--muted);
-            font-size: 0.92rem;
-        }
-
-        @media (max-width: 640px) {
-            .card {
-                padding: 28px 18px;
-                border-radius: 20px;
-            }
-
-            .primary-btn,
-            .secondary-btn {
-                width: 100%;
-            }
-        }
+        button:hover { background: #8fb38c; transform: scale(1.05); }
+        .warning { color: #ffcc00; margin-top: 40px; font-size: 1.1em; }
+        .fallback { margin-top: 30px; font-size: 1em; color: #aaa; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="badge">🎮 Roblox Server Link</div>
-
-            <h1>Join the Exact Server</h1>
-            <p class="subtitle">
-                Open Roblox and connect directly to the specific server using the place ID and job ID below.
-            </p>
-
-            <div class="server-info">
-                <div class="info-row">
-                    <span class="label">Place ID</span>
-                    <span class="value" id="place">Loading...</span>
-                </div>
-                <div class="info-row">
-                    <span class="label">Job ID</span>
-                    <span class="value" id="job">Loading...</span>
-                </div>
-            </div>
-
-            <div class="actions">
-                <button class="primary-btn" onclick="joinServer()">🚀 Open Roblox & Join</button>
-                <button class="secondary-btn" onclick="copyLink()">📋 Copy Direct Join Link</button>
-            </div>
-
-            <div class="notice">
-                This uses Roblox’s official protocol link. If Roblox does not open automatically, you can copy the direct link and use it manually.
-            </div>
-
-            <p class="footer-text" id="status">Ready to join.</p>
-        </div>
+    <h1>🔗 JOIN EXACT SERVER</h1>
+    <div class="server-info">
+        <p><strong>Place ID:</strong> <span id="placeId">Loading...</span></p>
+        <p><strong>Job ID:</strong> <span id="jobId">Loading...</span></p>
     </div>
 
+    <button onclick="joinServer()">🚀 OPEN ROBLOX & JOIN NOW</button>
+
+    <p class="warning">
+        This uses Roblox's official protocol handler.<br>
+        It will launch the Roblox client directly into the exact public server.
+    </p>
+
+    <div class="fallback" id="fallbackMsg"></div>
+
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const placeId = urlParams.get("placeId");
-        const jobId = urlParams.get("jobId");
-        const statusText = document.getElementById("status");
+        const params = new URLSearchParams(window.location.search);
+        const placeId = params.get('placeId');
+        const jobId = params.get('jobId');
 
-        document.getElementById("place").textContent = placeId || "N/A";
-        document.getElementById("job").textContent = jobId || "N/A";
-
-        function getRobloxLink() {
-            return `roblox://experiences/start?placeId=${placeId}&gameInstanceId=${jobId}`;
-        }
+        document.getElementById('placeId').textContent = placeId || 'N/A';
+        document.getElementById('jobId').textContent = jobId || 'N/A';
 
         function joinServer() {
             if (!placeId || !jobId) {
-                alert("Missing server info.");
-                statusText.textContent = "Missing place ID or job ID.";
+                alert("Missing server info! Make sure the link has ?placeId=...&jobId=...");
                 return;
             }
 
-            const link = getRobloxLink();
-            statusText.textContent = "Attempting to open Roblox...";
-            window.location.href = link;
+            // Official 2026 protocol (exact server join)
+            const protocolLink = `roblox://experiences/start?placeId=${placeId}&gameInstanceId=${jobId}`;
 
+            window.location.href = protocolLink;
+
+            // Fallback after 1.2 seconds (in case protocol fails)
             setTimeout(() => {
-                statusText.textContent = "If Roblox did not open, use the copy button below.";
-            }, 1500);
+                const msg = document.getElementById('fallbackMsg');
+                msg.innerHTML = `
+                    Roblox didn't open automatically?<br>
+                    <strong>Copy this direct protocol link and paste it into your browser:</strong><br>
+                    <code style="background:#222;padding:4px 8px;border-radius:4px;">${protocolLink}</code><br><br>
+                    Or try the web fallback:<br>
+                    <a href="https://www.roblox.com/games/start?placeId=${placeId}&gameInstanceId=${jobId}" target="_blank" style="color:#a0c19d;">Open web join link</a>
+                `;
+                msg.style.display = 'block';
+            }, 1200);
         }
 
-        function copyLink() {
-            if (!placeId || !jobId) {
-                alert("Missing server info.");
-                statusText.textContent = "Missing place ID or job ID.";
-                return;
-            }
-
-            const link = getRobloxLink();
-
-            navigator.clipboard.writeText(link)
-                .then(() => {
-                    statusText.textContent = "Direct join link copied to clipboard.";
-                })
-                .catch(() => {
-                    statusText.textContent = "Could not copy the link automatically.";
-                    alert("Failed to copy link.");
-                });
-        }
-
+        // Auto-attempt with confirmation (feels instant)
         window.onload = () => {
-            if (!placeId || !jobId) {
-                statusText.textContent = "Waiting for valid placeId and jobId in the URL.";
-                return;
-            }
-
-            statusText.textContent = "Server info loaded. You can join now.";
+            setTimeout(() => {
+                if (confirm("Auto-joining server in 2 seconds... Click OK to proceed (or Cancel to read instructions)")) {
+                    joinServer();
+                }
+            }, 800);
         };
     </script>
 </body>
