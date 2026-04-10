@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Exact Roblox Server</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0f0f;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin: 0;
+        }
+        h1 { color: #a0c19d; font-size: 2.5em; margin-bottom: 10px; }
+        p { font-size: 1.2em; margin: 15px 0; }
+        .server-info { background: #1f1f1f; padding: 20px; border-radius: 12px; display: inline-block; margin: 20px 0; }
+        button {
+            background: #a0c19d;
+            color: #111;
+            font-size: 1.4em;
+            font-weight: 600;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+        button:hover { background: #8fb38c; transform: scale(1.05); }
+        .warning { color: #ffcc00; font-size: 1em; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <h1>🔗 JOIN EXACT SERVER</h1>
+    <div class="server-info">
+        <p><strong>Place ID:</strong> <span id="place"></span></p>
+        <p><strong>Job ID:</strong> <span id="job"></span></p>
+    </div>
+
+    <button onclick="joinServer()">🚀 OPEN ROBLOX & JOIN NOW</button>
+
+    <p class="warning">
+        ✅ This link uses Roblox's official protocol.<br>
+        Roblox client will open directly and join the exact server.
+    </p>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const placeId = urlParams.get('placeId');
+        const jobId = urlParams.get('jobId');
+
+        document.getElementById('place').textContent = placeId || 'N/A';
+        document.getElementById('job').textContent = jobId || 'N/A';
+
+        function joinServer() {
+            if (!placeId || !jobId) {
+                alert("Missing server info!");
+                return;
+            }
+            const link = `roblox://experiences/start?placeId=${placeId}&gameInstanceId=${jobId}`;
+            window.location.href = link;
+
+            // Fallback message
+            setTimeout(() => {
+                if (confirm("Roblox didn't open automatically?\n\nClick OK to copy the direct link.")) {
+                    navigator.clipboard.writeText(link).then(() => alert("Link copied! Paste it in your browser or Roblox app."));
+                }
+            }, 1200);
+        }
+
+        // Auto attempt after 800ms (with user confirmation)
+        window.onload = () => setTimeout(() => {
+            if (confirm("Auto-joining server in 3 seconds... Click OK to proceed.")) {
+                joinServer();
+            }
+        }, 800);
+    </script>
+</body>
+</html>
