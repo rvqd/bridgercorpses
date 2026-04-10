@@ -5,97 +5,58 @@
     <title>Join Exact Roblox Server</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0f0f0f;
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
-            margin: 0;
-        }
-        h1 { color: #a0c19d; font-size: 2.8em; margin-bottom: 10px; }
-        .server-info {
-            background: #1f1f1f;
-            padding: 25px;
-            border-radius: 16px;
-            display: inline-block;
-            margin: 25px 0;
-            max-width: 420px;
-        }
-        button {
-            background: #a0c19d;
-            color: #111;
-            font-size: 1.5em;
-            font-weight: 600;
-            padding: 20px 50px;
-            border: none;
-            border-radius: 14px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.2s;
-        }
+        body { font-family: 'Inter', sans-serif; background: #0f0f0f; color: white; text-align: center; padding: 60px 20px; margin: 0; }
+        h1 { color: #a0c19d; font-size: 2.6em; }
+        .info { background: #1f1f1f; padding: 20px; border-radius: 12px; display: inline-block; margin: 20px 0; }
+        button { background: #a0c19d; color: #111; font-size: 1.4em; padding: 16px 40px; border: none; border-radius: 12px; cursor: pointer; margin: 10px; transition: 0.2s; }
         button:hover { background: #8fb38c; transform: scale(1.05); }
-        .warning { color: #ffcc00; margin-top: 40px; font-size: 1.1em; }
-        .fallback { margin-top: 30px; font-size: 1em; color: #aaa; }
+        .console { background: #222; padding: 15px; border-radius: 8px; text-align: left; font-family: monospace; margin: 20px auto; max-width: 600px; white-space: pre-wrap; }
+        .warning { color: #ffcc00; margin-top: 30px; }
     </style>
 </head>
 <body>
     <h1>🔗 JOIN EXACT SERVER</h1>
-    <div class="server-info">
-        <p><strong>Place ID:</strong> <span id="placeId">Loading...</span></p>
-        <p><strong>Job ID:</strong> <span id="jobId">Loading...</span></p>
+    <div class="info">
+        <p><strong>Place ID:</strong> <span id="place"></span></p>
+        <p><strong>Job ID:</strong> <span id="job"></span></p>
     </div>
 
-    <button onclick="joinServer()">🚀 OPEN ROBLOX & JOIN NOW</button>
+    <button onclick="tryProtocol()">🚀 Launch Roblox Directly</button>
+    <button onclick="tryWebLink()">🌐 Try Web Join Link</button>
+    <button onclick="showConsoleMethod()">📋 Console Method (Most Reliable)</button>
+
+    <div id="consoleBox" class="console" style="display:none;"></div>
 
     <p class="warning">
-        This uses Roblox's official protocol handler.<br>
-        It will launch the Roblox client directly into the exact public server.
+        If nothing happens, use the Console Method (copy & paste in F12 on any Roblox page).
     </p>
-
-    <div class="fallback" id="fallbackMsg"></div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
         const placeId = params.get('placeId');
         const jobId = params.get('jobId');
 
-        document.getElementById('placeId').textContent = placeId || 'N/A';
-        document.getElementById('jobId').textContent = jobId || 'N/A';
+        document.getElementById('place').textContent = placeId || 'N/A';
+        document.getElementById('job').textContent = jobId || 'N/A';
 
-        function joinServer() {
-            if (!placeId || !jobId) {
-                alert("Missing server info! Make sure the link has ?placeId=...&jobId=...");
-                return;
-            }
-
-            // Official 2026 protocol (exact server join)
-            const protocolLink = `roblox://experiences/start?placeId=${placeId}&gameInstanceId=${jobId}`;
-
-            window.location.href = protocolLink;
-
-            // Fallback after 1.2 seconds (in case protocol fails)
-            setTimeout(() => {
-                const msg = document.getElementById('fallbackMsg');
-                msg.innerHTML = `
-                    Roblox didn't open automatically?<br>
-                    <strong>Copy this direct protocol link and paste it into your browser:</strong><br>
-                    <code style="background:#222;padding:4px 8px;border-radius:4px;">${protocolLink}</code><br><br>
-                    Or try the web fallback:<br>
-                    <a href="https://www.roblox.com/games/start?placeId=${placeId}&gameInstanceId=${jobId}" target="_blank" style="color:#a0c19d;">Open web join link</a>
-                `;
-                msg.style.display = 'block';
-            }, 1200);
+        function tryProtocol() {
+            if (!placeId || !jobId) return alert("Missing IDs");
+            window.location.href = `roblox://experiences/start?placeId=${placeId}&gameInstanceId=${jobId}`;
         }
 
-        // Auto-attempt with confirmation (feels instant)
-        window.onload = () => {
-            setTimeout(() => {
-                if (confirm("Auto-joining server in 2 seconds... Click OK to proceed (or Cancel to read instructions)")) {
-                    joinServer();
-                }
-            }, 800);
-        };
+        function tryWebLink() {
+            if (!placeId || !jobId) return alert("Missing IDs");
+            window.open(`https://www.roblox.com/games/start?placeId=${placeId}&jobId=${jobId}`, '_blank');
+        }
+
+        function showConsoleMethod() {
+            const box = document.getElementById('consoleBox');
+            box.style.display = 'block';
+            box.innerHTML = `// Paste this in F12 → Console on ANY Roblox page (e.g. roblox.com/home)\nRoblox.GameLauncher.joinGameInstance(${placeId}, "${jobId}");`;
+        }
+
+        // Auto try protocol
+        window.onload = () => setTimeout(tryProtocol, 600);
     </script>
 </body>
 </html>
