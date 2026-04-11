@@ -21,14 +21,13 @@
         <p><strong>Job ID:</strong> <span id="job"></span></p>
     </div>
 
-    <button onclick="tryProtocol()">🚀 Launch Roblox Directly</button>
-    <button onclick="tryWebLink()">🌐 Try Web Join Link</button>
-    <button onclick="showConsoleMethod()">📋 Console Method (Most Reliable)</button>
+    <button onclick="tryProtocol()">🚀 Launch Roblox Directly (Auto)</button>
+    <button onclick="openRobloxAndShowCommand()">🌐 Open Roblox.com + Show Console Command</button>
 
     <div id="consoleBox" class="console" style="display:none;"></div>
 
     <p class="warning">
-        If nothing happens, use the Console Method (copy & paste in F12 on any Roblox page).
+        The Console Method is currently the most reliable for public servers from another account.
     </p>
 
     <script>
@@ -40,23 +39,22 @@
         document.getElementById('job').textContent = jobId || 'N/A';
 
         function tryProtocol() {
-            if (!placeId || !jobId) return alert("Missing IDs");
+            if (!placeId || !jobId) return alert("Missing server info!");
             window.location.href = `roblox://experiences/start?placeId=${placeId}&gameInstanceId=${jobId}`;
         }
 
-        function tryWebLink() {
-            if (!placeId || !jobId) return alert("Missing IDs");
-            window.open(`https://www.roblox.com/games/start?placeId=${placeId}&jobId=${jobId}`, '_blank');
-        }
-
-        function showConsoleMethod() {
+        function openRobloxAndShowCommand() {
+            if (!placeId || !jobId) return alert("Missing server info!");
+            // Open Roblox home in new tab
+            window.open('https://www.roblox.com/home', '_blank');
+            // Show command
             const box = document.getElementById('consoleBox');
             box.style.display = 'block';
-            box.innerHTML = `// Paste this in F12 → Console on ANY Roblox page (e.g. roblox.com/home)\nRoblox.GameLauncher.joinGameInstance(${placeId}, "${jobId}");`;
+            box.innerHTML = `// 1. Roblox.com should now be open in another tab\n// 2. Press F12 → go to Console tab\n// 3. Paste this line and press Enter:\nRoblox.GameLauncher.joinGameInstance(${placeId}, "${jobId}");`;
         }
 
-        // Auto-try protocol
-        window.onload = () => setTimeout(tryProtocol, 600);
+        // Auto attempt protocol on load
+        window.onload = () => setTimeout(tryProtocol, 800);
     </script>
 </body>
 </html>
